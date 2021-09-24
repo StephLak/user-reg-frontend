@@ -28,7 +28,7 @@ const STYLES: Styles = {
 
       "#root": {
         "* .roboto": {
-          fontFamily: "'Poppins', sans-serif",
+          fontFamily: "'Nunito', sans-serif",
         },
       },
     },
@@ -41,7 +41,7 @@ const STYLES: Styles = {
       pos: "relative",
 
       "*": {
-        fontFamily: "'Poppins'",
+        fontFamily: "'Nunito'",
       },
     },
   },
