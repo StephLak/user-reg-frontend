@@ -87,7 +87,7 @@ const ForgotPassword = () => {
               <CustomButton
                 textTransform="capitalize"
                 maxW="10rem"
-                w="50%"
+                w={{ base: "60%", sm: "50%" }}
                 fontSize="1rem"
                 type="submit"
               >

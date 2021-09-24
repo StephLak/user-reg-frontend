@@ -19,36 +19,48 @@ import { saveItemToStorage, USER_TOKEN_KEY } from "../../utils/utils";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 
 type FormValues = {
+  fullName?: string | null;
   email: string;
+  phoneNumber?: string | null;
   password: string;
+  confirmPassword?: string | null;
 };
 
 const validationSchema = Yup.object().shape({
-  password: Yup.string().required("Password is required"),
-
+  fullName: Yup.string(),
   email: Yup.string()
     .required("Email is required")
     .email("Enter a valid email"),
+  phoneNumber: Yup.string(),
+  password: Yup.string().required("Password is required"),
+  confirmPassword: Yup.string(),
 });
 
 type Props = LinkDispatchProps;
 
-const Login: React.FC<Props> = ({ setCurrentUser }) => {
+const Register: React.FC<Props> = ({ setCurrentUser }) => {
   const toast = useToast();
   const history = useHistory();
   const initialValues: FormValues = {
+    fullName: "",
     email: "",
+    phoneNumber: "",
     password: "",
+    confirmPassword: "",
   };
 
   const { isLoading, createQuery } = useQuery({
     method: "POST",
-    url: `${BASE_URL}/login`,
+    url: `${BASE_URL}/register`,
     headers: getHeaders(),
   });
 
   const handleSubmit = async (values: FormValues) => {
     console.log({ values });
+    delete values.fullName;
+    delete values.phoneNumber;
+    delete values.confirmPassword;
+    console.log(values);
 
     try {
       const response = await createQuery(values);
@@ -65,8 +77,8 @@ const Login: React.FC<Props> = ({ setCurrentUser }) => {
       setCurrentUser({ token: token });
       toast({
         status: "success",
-        title: "Login Success!",
-        description: "You've successfully signed in!",
+        title: "Registrations Success!",
+        description: "You've successfully registered!",
         duration: 3000,
       });
       history.push("/");
@@ -75,7 +87,7 @@ const Login: React.FC<Props> = ({ setCurrentUser }) => {
       console.log(error?.response?.data?.error);
       toast({
         status: "error",
-        title: "Login Error!",
+        title: "Registration Error!",
         description: errorResponse,
         duration: 3000,
       });
@@ -84,8 +96,8 @@ const Login: React.FC<Props> = ({ setCurrentUser }) => {
 
   return (
     <AuthLayout
-      title="Login to your account"
-      subtitle="Login with your email and password"
+      title="Create an account"
+      subtitle="Enter your email and set a password to begin"
     >
       <Formik
         onSubmit={handleSubmit}
@@ -99,10 +111,29 @@ const Login: React.FC<Props> = ({ setCurrentUser }) => {
             maxW="500px"
             w="100%"
             minH="50vh"
+            mt={6}
             d="flex"
             flexDir="column"
             onSubmit={handleSubmit}
           >
+            <Field name="fullName">
+              {({ field, form }: FieldProps) => {
+                const { name } = field;
+                const { errors, touched } = form;
+
+                return (
+                  <FormInput
+                    {...field}
+                    error={errors[name]}
+                    isTouched={touched[name]}
+                    h="3rem"
+                    formControlProps={{ my: 3 }}
+                    placeholder="Full Name"
+                  />
+                );
+              }}
+            </Field>
+
             <Field name="email">
               {({ field, form }: FieldProps) => {
                 const { name } = field;
@@ -115,11 +146,26 @@ const Login: React.FC<Props> = ({ setCurrentUser }) => {
                     isTouched={touched[name]}
                     type="email"
                     h="3rem"
-                    formControlProps={{ my: { base: 4, md: 6 } }}
-                    placeholder="Enter your email address"
-                    labelProps={{
-                      children: "Email",
-                    }}
+                    formControlProps={{ my: 3 }}
+                    placeholder="Email"
+                  />
+                );
+              }}
+            </Field>
+
+            <Field name="phoneNumber">
+              {({ field, form }: FieldProps) => {
+                const { name } = field;
+                const { errors, touched } = form;
+
+                return (
+                  <FormInput
+                    {...field}
+                    error={errors[name]}
+                    isTouched={touched[name]}
+                    h="3rem"
+                    formControlProps={{ my: 3 }}
+                    placeholder="Phone Number"
                   />
                 );
               }}
@@ -137,12 +183,29 @@ const Login: React.FC<Props> = ({ setCurrentUser }) => {
                     isTouched={touched[name]}
                     h="3rem"
                     type="password"
-                    formControlProps={{ my: { base: 0 } }}
-                    placeholder="Enter your password"
-                    labelProps={{
-                      children: "Password",
-                    }}
-                    showForgetPassword
+                    formControlProps={{ my: 3 }}
+                    placeholder="Password"
+                    showRightElement
+                  />
+                );
+              }}
+            </Field>
+
+            <Field name="confirmPassword">
+              {({ field, form }: FieldProps) => {
+                const { name } = field;
+                const { errors, touched } = form;
+
+                return (
+                  <FormInput
+                    {...field}
+                    error={errors[name]}
+                    isTouched={touched[name]}
+                    h="3rem"
+                    type="password"
+                    formControlProps={{ my: 3 }}
+                    placeholder="Confirm Password"
+                    showRightElement
                   />
                 );
               }}
@@ -151,13 +214,13 @@ const Login: React.FC<Props> = ({ setCurrentUser }) => {
               <CustomButton
                 textTransform="capitalize"
                 maxW="10rem"
-                w={{ base: "50%", sm: "40%" }}
+                w={{ base: "60%", sm: "50%" }}
                 fontSize="1rem"
                 type="submit"
                 isLoading={isLoading}
               >
                 <Flex align="center">
-                  <Box fontSize="14px">Login</Box>
+                  <Box fontSize="14px">Create Account</Box>
                   <ArrowForwardIcon ml="0.5rem" />
                 </Flex>
               </CustomButton>
@@ -170,16 +233,16 @@ const Login: React.FC<Props> = ({ setCurrentUser }) => {
               mb={8}
               fontSize={{ base: "0.7rem", md: "0.8rem" }}
             >
-              Don't have an account?{" "}
+              Already have an account?{" "}
               <LinkItem
                 isAnchor
                 ml="4px"
-                aria-label="register"
-                url="/register"
+                aria-label="login"
+                url="/login"
                 color={COLORS.PRIMARY_COLOR}
                 _hover={{ color: "blue" }}
               >
-                Create an account
+                Login
               </LinkItem>{" "}
             </Flex>
           </Box>
@@ -197,4 +260,4 @@ const mapDispatchToProps = (dispatch: Dispatch): LinkDispatchProps => ({
   setCurrentUser: bindActionCreators(setCurrentUser, dispatch),
 });
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(null, mapDispatchToProps)(Register);
