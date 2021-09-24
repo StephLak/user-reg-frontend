@@ -1,4 +1,5 @@
 import { RouteProps as RouterProps } from "react-router-dom";
+import ForgotPassword from "../pages/forgot-password/forgot-password";
 import Login from "../pages/login/login";
 
 export type RouteProps = {
@@ -32,11 +33,12 @@ export const BaseRoutes: RouteProps[] = [
   //   exact: true,
   //   redirectUrl: "",
   // },
-  // {
-  //   key: 4,
-  //   path: "/forgot-password",
-  //   component: ForgotPasswordPage,
-  //   isUnProtected: true,
-  //   exact: true,
-  // },
+
+  {
+    key: 4,
+    path: "/forgot-password",
+    component: ForgotPassword,
+    isUnProtected: true,
+    exact: true,
+  },
 ];
