@@ -3,7 +3,6 @@ export enum UserActionTypesEnums {
 }
 
 export interface IUser {
-  id: number;
   token: string;
 }
 
