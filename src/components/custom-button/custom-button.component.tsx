@@ -14,12 +14,12 @@ const CustomButton: React.FC<CustomButtonProps> = ({
     <Button
       overflowX="hidden"
       rounded="5px"
-      fontSize="0.8rem"
+      fontSize="0.7rem"
       border="1px solid white"
       boxShadow="0px 8px 5px rgba(75, 93, 104, 0.1)"
       bgColor={COLORS.PRIMARY_COLOR}
       color="white"
-      fontWeight="normal"
+      fontWeight="medium"
       h="2rem"
       _focus={{
         border: "none",
