@@ -69,7 +69,7 @@ const AuthLayout: React.FC<Props> = ({ children, title, subtitle }) => {
         <Flex
           flexDir="column"
           minH="20rem"
-          w="45%"
+          w="50%"
           bgColor="white"
           borderRadius={BorderRadius}
           boxShadow={BoxShadow}

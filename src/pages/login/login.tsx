@@ -157,7 +157,7 @@ const Login: React.FC<Props> = ({ setCurrentUser }) => {
               >
                 <Flex align="center">
                   <Box fontSize="14px">Login</Box>
-                  <ArrowForwardIcon w="2rem" />
+                  <ArrowForwardIcon ml="0.5rem" />
                 </Flex>
               </CustomButton>
             </Flex>
@@ -172,7 +172,6 @@ const Login: React.FC<Props> = ({ setCurrentUser }) => {
               Don't have an account?{" "}
               <LinkItem
                 isAnchor
-                mt="3px"
                 ml="4px"
                 aria-label="register"
                 url="/register"
