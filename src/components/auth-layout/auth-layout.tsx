@@ -6,10 +6,12 @@ import SideBarSmallRectangle from "../sidebar-small-rectangles/sidebar-small-rec
 import { BorderRadius, BoxShadow, COLORS } from "../../styles/theme";
 
 type Props = {
+  title: string;
+  subtitle: string;
   children: any;
 };
 
-const AuthLayout: React.FC<Props> = ({ children }) => {
+const AuthLayout: React.FC<Props> = ({ children, title, subtitle }) => {
   const customTextStyle = {
     fontSize: "12px",
     color: "#384C74",
@@ -37,7 +39,7 @@ const AuthLayout: React.FC<Props> = ({ children }) => {
               color="#18B2D2"
               textTransform="uppercase"
               fontSize="15px"
-              fontWeight="normal"
+              fontWeight="700"
             >
               Our Solution
             </Text>
@@ -50,7 +52,7 @@ const AuthLayout: React.FC<Props> = ({ children }) => {
               Our solution provides low-cost, carbon-free on demand power for
               households and small business across Nigeria.
             </Text>
-            <Flex mt="0.5rem">
+            <Flex mt="1rem">
               <SideBarSmallRectangle bgColor="#18B2D2" />
               <SideBarSmallRectangle bgColor="white" />
               <SideBarSmallRectangle bgColor="white" />
@@ -66,26 +68,25 @@ const AuthLayout: React.FC<Props> = ({ children }) => {
       <Flex w="77%" align="center" justify="center">
         <Flex
           flexDir="column"
-          minH="25rem"
-          h="50%"
+          minH="20rem"
           w="45%"
           bgColor="white"
           borderRadius={BorderRadius}
           boxShadow={BoxShadow}
         >
           <Box
-            h="0.4rem"
+            h="0.5rem"
             w="100%"
             bgColor={COLORS.PRIMARY_COLOR}
             borderRadius="5px 5px 0 0"
           />
-          <Flex flexDir="column" w="100%" h="100%" px="8%" py="5%">
+          <Flex flexDir="column" w="100%" h="98%" px="10%" pt="2rem">
             <Flex h="3rem" align="center">
               <Image src={LockImage} w="3rem" h="3rem" />
               <Flex flexDir="column" ml="0.6rem">
-                <Box fontSize="15px">Login to your account</Box>
-                <Box mt="0.2rem" color="#384C74" fontSize="12px">
-                  Login with your email and password
+                <Box fontSize="15px">{title}</Box>
+                <Box mt="0.05rem" color="#384C74" fontSize="12px">
+                  {subtitle}
                 </Box>
               </Flex>
             </Flex>
