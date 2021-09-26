@@ -1,21 +1,12 @@
-import React from "react";
-import { Box, Flex, useToast } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import * as Yup from "yup";
 
 import AuthLayout from "../../components/auth-layout/auth-layout";
-import { User } from "../../redux/user/user.types";
-import { bindActionCreators, Dispatch } from "redux";
-import { setCurrentUser } from "../../redux/user/user.actions";
-import { connect } from "react-redux";
 import { Field, FieldProps, Formik } from "formik";
-import { useHistory } from "react-router-dom";
-import { useQuery } from "react-query-pro";
-import { BASE_URL, getHeaders } from "../../utils/api.utils";
 import FormInput from "../../components/form-input/form-input.component";
 import LinkItem from "../../components/link-item/link-item.component";
 import { COLORS } from "../../styles/theme";
 import CustomButton from "../../components/custom-button/custom-button.component";
-import { saveItemToStorage, USER_TOKEN_KEY } from "../../utils/utils";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 
 type FormValues = {

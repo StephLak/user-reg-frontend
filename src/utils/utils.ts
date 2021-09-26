@@ -1,5 +1,3 @@
-import { UseToastOptions } from "@chakra-ui/react";
-
 export const URL_ORIGIN = window.location.origin;
 
 export const BASE_KEY = `x!#@!ng<DD>**^${URL_ORIGIN}449a!!das!h~board?>//`;

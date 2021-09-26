@@ -6,7 +6,6 @@ import { User } from "../redux/user/user.types";
 import { AppStateTypes } from "../redux/root.reducer";
 import { selectCurrentUser } from "../redux/user/user.selector";
 import { Spinner } from "@chakra-ui/react";
-import { saveItemToStorage } from "../utils/utils";
 
 type ProtectedRouteProps = {
   isLoading?: boolean;
