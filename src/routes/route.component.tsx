@@ -16,7 +16,7 @@ export const BaseRoutes: RouteProps[] = [
     key: 1,
     path: "/",
     component: Home,
-    isProtected: false,
+    isProtected: true,
     exact: true,
   },
   {
