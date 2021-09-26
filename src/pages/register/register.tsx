@@ -127,7 +127,7 @@ const Register: React.FC<Props> = ({ setCurrentUser }) => {
                     error={errors[name]}
                     isTouched={touched[name]}
                     h="3rem"
-                    formControlProps={{ my: 3 }}
+                    formControlProps={{ my: 2 }}
                     placeholder="Full Name"
                   />
                 );
@@ -146,7 +146,7 @@ const Register: React.FC<Props> = ({ setCurrentUser }) => {
                     isTouched={touched[name]}
                     type="email"
                     h="3rem"
-                    formControlProps={{ my: 3 }}
+                    formControlProps={{ my: 2 }}
                     placeholder="Email"
                   />
                 );
@@ -164,7 +164,7 @@ const Register: React.FC<Props> = ({ setCurrentUser }) => {
                     error={errors[name]}
                     isTouched={touched[name]}
                     h="3rem"
-                    formControlProps={{ my: 3 }}
+                    formControlProps={{ my: 2 }}
                     placeholder="Phone Number"
                   />
                 );
@@ -183,7 +183,7 @@ const Register: React.FC<Props> = ({ setCurrentUser }) => {
                     isTouched={touched[name]}
                     h="3rem"
                     type="password"
-                    formControlProps={{ my: 3 }}
+                    formControlProps={{ my: 2 }}
                     placeholder="Password"
                     showRightElement
                   />
@@ -203,7 +203,7 @@ const Register: React.FC<Props> = ({ setCurrentUser }) => {
                     isTouched={touched[name]}
                     h="3rem"
                     type="password"
-                    formControlProps={{ my: 3 }}
+                    formControlProps={{ my: 2 }}
                     placeholder="Confirm Password"
                     showRightElement
                   />
