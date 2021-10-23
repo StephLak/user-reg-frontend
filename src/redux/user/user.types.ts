@@ -3,7 +3,10 @@ export enum UserActionTypesEnums {
 }
 
 export interface IUser {
-  token: string;
+  name: string;
+  email: string;
+  age: number;
+  phone: string;
 }
 
 export type User = IUser | null;
