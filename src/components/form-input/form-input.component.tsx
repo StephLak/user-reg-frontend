@@ -20,7 +20,6 @@ import {
 import React, { useState } from "react";
 import { COLORS } from "../../styles/theme";
 import PasswordToggler from "./password-toggler.component";
-import LinkItem from "../../components/link-item/link-item.component";
 
 interface Props {
   formControlProps?: FormControlProps;
@@ -31,7 +30,6 @@ interface Props {
   leftElement?: InputElementProps;
   rightElement?: InputElementProps;
   useTextForError?: boolean;
-  showForgetPassword?: boolean;
   tip?: BoxProps;
 }
 
@@ -47,7 +45,6 @@ const FormInput: React.FC<FormInputProps> = ({
   w,
   leftElement,
   showRightElement = false,
-  showForgetPassword = false,
   rightElement,
   labelProps,
   useTextForError,
@@ -98,15 +95,6 @@ const FormInput: React.FC<FormInputProps> = ({
           >
             {labelProps?.children}
           </FormLabel>
-        )}{" "}
-        {showForgetPassword && (
-          <LinkItem
-            isAnchor
-            color={COLORS.PRIMARY_COLOR}
-            url="/forgot-password"
-          >
-            Forgot Password?
-          </LinkItem>
         )}
       </Flex>
 
