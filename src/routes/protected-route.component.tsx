@@ -17,7 +17,7 @@ type Props = ProtectedRouteProps & LinkStateProps & RouteProps;
 const ProtectedRoute: React.FC<Props> = ({
   isLoading = false,
   currentUser,
-  redirectUrl = "/register",
+  redirectUrl = "/login",
   ...otherProps
 }) => {
   if (isLoading) return <Spinner size="xl" />;
