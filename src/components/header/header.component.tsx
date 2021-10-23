@@ -1,47 +1,54 @@
 import { Flex, Image } from "@chakra-ui/react";
+import { connect } from "react-redux";
+import { useHistory } from "react-router";
+import { bindActionCreators, Dispatch } from "redux";
+import { createStructuredSelector } from "reselect";
+import { AppStateTypes } from "../../redux/root.reducer";
+import { setCurrentUser } from "../../redux/user/user.actions";
+import { selectCurrentUser } from "../../redux/user/user.selector";
+import { User } from "../../redux/user/user.types";
 import { BoxShadow } from "../../styles/theme";
-import emailIcon from "../../assets/icons/email.png";
-import avatarIcon from "../../assets/icons/avatar.png";
-import notificationIcon from "../../assets/icons/notification.png";
+import { removeItemFromStorage, USER_TOKEN_KEY } from "../../utils/utils";
+import CustomButton from "../custom-button/custom-button.component";
+import LogoImage from "../../assets/images/logo.png";
 
-const Header = () => {
-  const sideBarWidth = "11rem";
+type Props = LinkDispatchProps;
+
+const Header: React.FC<Props> = ({ setCurrentUser }) => {
+  const history = useHistory();
+  const logout = () => {
+    setCurrentUser(null);
+    removeItemFromStorage({
+      itemKey: USER_TOKEN_KEY,
+      storage: localStorage,
+    });
+    history.push("/login");
+  };
   return (
     <Flex
-      ml={sideBarWidth}
-      h="3rem"
+      h="4rem"
+      px={{ base: "5%", sm: "10%" }}
       flexDir="row"
       justify="space-between"
       position="fixed"
-      w="87%"
+      w="100%"
       boxShadow={BoxShadow}
       zIndex={1}
       align="center"
       bgColor="white"
     >
-      <Flex
-        ml="auto"
-        mr={{ base: "35%", sm: "25%", md: "15%", lg: "10%" }}
-        align="center"
-      >
-        <Image alt="email" src={emailIcon} h="1.1rem" mr="1rem" w="1.1rem" />
-        <Image
-          alt="notification"
-          src={notificationIcon}
-          h="1.1rem"
-          mr="2.5rem"
-          w="1.1rem"
-        />
-        <Image
-          alt="avatar"
-          src={avatarIcon}
-          h="1.5rem"
-          minW="1rem"
-          w="1.5rem"
-        />
-      </Flex>
+      <Image src={LogoImage} w="5rem" />
+      <CustomButton onClick={logout}>Logout</CustomButton>
     </Flex>
   );
 };
 
-export default Header;
+type LinkDispatchProps = {
+  setCurrentUser: (user: User) => void;
+};
+
+const mapDispatchToProps = (dispatch: Dispatch): LinkDispatchProps => ({
+  setCurrentUser: bindActionCreators(setCurrentUser, dispatch),
+});
+
+export default connect(null, mapDispatchToProps)(Header);
