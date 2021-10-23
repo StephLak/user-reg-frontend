@@ -43,26 +43,22 @@ const Login: React.FC<Props> = ({ setCurrentUser }) => {
 
   const { isLoading, createQuery } = useQuery({
     method: "POST",
-    url: `${BASE_URL}/login`,
+    url: `${BASE_URL}/auth/login`,
     headers: getHeaders(),
   });
 
   const handleSubmit = async (values: FormValues) => {
-    console.log({ values });
-
     try {
       const response = await createQuery(values);
 
-      console.log(response);
-
-      const token = response || "";
+      const { token, data } = response || {};
 
       saveItemToStorage({
         itemKey: USER_TOKEN_KEY,
         storage: localStorage,
         item: token,
       });
-      setCurrentUser({ token: token });
+      setCurrentUser(data);
       toast({
         status: "success",
         title: "Login Success!",
@@ -71,11 +67,17 @@ const Login: React.FC<Props> = ({ setCurrentUser }) => {
       });
       history.push("/");
     } catch (error: any) {
-      const errorResponse = error?.response?.data?.error;
-      console.log(error?.response?.data?.error);
+      const errorMessage = error?.response?.data?.message;
+      const errorArray = error?.response?.data?.err;
+      const errorResponse =
+        errorArray && errorArray.length > 0
+          ? error?.response?.data?.err[0]?.msg
+          : errorMessage
+          ? errorMessage
+          : "Something went wrong. Please try again";
       toast({
         status: "error",
-        title: "Login Error!",
+        title: "Login Error",
         description: errorResponse,
         duration: 3000,
       });
@@ -142,7 +144,6 @@ const Login: React.FC<Props> = ({ setCurrentUser }) => {
                     labelProps={{
                       children: "Password",
                     }}
-                    showForgetPassword
                   />
                 );
               }}
