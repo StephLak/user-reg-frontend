@@ -19,7 +19,7 @@ const SideBar = () => {
       bgSize="cover"
     >
       <Flex px="7%" py="10%" h="100%" flexDir="column" justify="space-between">
-        <Image src={LogoImage} w="5rem" />
+        <Image mx="auto" src={LogoImage} w="6rem" />
         <Flex flexDir="column">
           <Text
             color="#18B2D2"
@@ -30,8 +30,9 @@ const SideBar = () => {
             Our Solution
           </Text>
           <Text mt="0.5rem" color="#384C74" fontSize="15px" fontWeight="light">
-            Our solution provides low-cost, carbon-free on demand power for
-            households and small business across Nigeria.
+            We belive in making comunities sustainble through empowering
+            artisans Refugees with the form of luxury crafts and connecting them
+            with designers for skill development and get them employed.
           </Text>
           <Flex mt="1rem">
             <SideBarSmallRectangle bgColor="#18B2D2" />
