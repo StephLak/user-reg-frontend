@@ -19,21 +19,21 @@ import { saveItemToStorage, USER_TOKEN_KEY } from "../../utils/utils";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 
 type FormValues = {
-  fullName?: string | null;
+  name: string;
+  age: number;
   email: string;
-  phoneNumber?: string | null;
+  phone: string;
   password: string;
-  confirmPassword?: string | null;
 };
 
 const validationSchema = Yup.object().shape({
-  fullName: Yup.string(),
+  name: Yup.string().required("Please enter your name"),
+  age: Yup.number().required("Please enter your age"),
   email: Yup.string()
     .required("Email is required")
     .email("Enter a valid email"),
-  phoneNumber: Yup.string(),
+  phone: Yup.string().required("Phone Number is required"),
   password: Yup.string().required("Password is required"),
-  confirmPassword: Yup.string(),
 });
 
 type Props = LinkDispatchProps;
@@ -42,39 +42,33 @@ const Register: React.FC<Props> = ({ setCurrentUser }) => {
   const toast = useToast();
   const history = useHistory();
   const initialValues: FormValues = {
-    fullName: "",
+    name: "",
+    age: 0,
     email: "",
-    phoneNumber: "",
+    phone: "",
     password: "",
-    confirmPassword: "",
   };
 
   const { isLoading, createQuery } = useQuery({
     method: "POST",
-    url: `${BASE_URL}/register`,
+    url: `${BASE_URL}/auth/register`,
     headers: getHeaders(),
   });
 
   const handleSubmit = async (values: FormValues) => {
     console.log({ values });
-    delete values.fullName;
-    delete values.phoneNumber;
-    delete values.confirmPassword;
-    console.log(values);
 
     try {
       const response = await createQuery(values);
 
-      console.log(response);
-
-      const token = response || "";
+      const { token, data } = response || {};
 
       saveItemToStorage({
         itemKey: USER_TOKEN_KEY,
         storage: localStorage,
         item: token,
       });
-      setCurrentUser({ token: token });
+      setCurrentUser(data);
       toast({
         status: "success",
         title: "Registrations Success!",
@@ -83,11 +77,17 @@ const Register: React.FC<Props> = ({ setCurrentUser }) => {
       });
       history.push("/");
     } catch (error: any) {
-      const errorResponse = error?.response?.data?.error;
-      console.log(error?.response?.data?.error);
+      const errorMessage = error?.response?.data?.message;
+      const errorArray = error?.response?.data?.err;
+      const errorResponse =
+        errorArray && errorArray.length > 0
+          ? error?.response?.data?.err[0]?.msg
+          : errorMessage
+          ? errorMessage
+          : "Something went wrong. Please try again";
       toast({
         status: "error",
-        title: "Registration Error!",
+        title: "Registration Error",
         description: errorResponse,
         duration: 3000,
       });
@@ -116,7 +116,7 @@ const Register: React.FC<Props> = ({ setCurrentUser }) => {
             flexDir="column"
             onSubmit={handleSubmit}
           >
-            <Field name="fullName">
+            <Field name="name">
               {({ field, form }: FieldProps) => {
                 const { name } = field;
                 const { errors, touched } = form;
@@ -128,7 +128,26 @@ const Register: React.FC<Props> = ({ setCurrentUser }) => {
                     isTouched={touched[name]}
                     h="3rem"
                     formControlProps={{ my: 2 }}
-                    placeholder="Full Name"
+                    placeholder="Name"
+                  />
+                );
+              }}
+            </Field>
+
+            <Field name="age">
+              {({ field, form }: FieldProps) => {
+                const { name } = field;
+                const { errors, touched } = form;
+
+                return (
+                  <FormInput
+                    {...field}
+                    type="number"
+                    error={errors[name]}
+                    isTouched={touched[name]}
+                    h="3rem"
+                    formControlProps={{ my: 2 }}
+                    placeholder="Age"
                   />
                 );
               }}
@@ -153,7 +172,7 @@ const Register: React.FC<Props> = ({ setCurrentUser }) => {
               }}
             </Field>
 
-            <Field name="phoneNumber">
+            <Field name="phone">
               {({ field, form }: FieldProps) => {
                 const { name } = field;
                 const { errors, touched } = form;
@@ -191,25 +210,6 @@ const Register: React.FC<Props> = ({ setCurrentUser }) => {
               }}
             </Field>
 
-            <Field name="confirmPassword">
-              {({ field, form }: FieldProps) => {
-                const { name } = field;
-                const { errors, touched } = form;
-
-                return (
-                  <FormInput
-                    {...field}
-                    error={errors[name]}
-                    isTouched={touched[name]}
-                    h="3rem"
-                    type="password"
-                    formControlProps={{ my: 2 }}
-                    placeholder="Confirm Password"
-                    showRightElement
-                  />
-                );
-              }}
-            </Field>
             <Flex mt={8} justify="center">
               <CustomButton
                 textTransform="capitalize"
