@@ -9,11 +9,7 @@ export type ErrorType = {
   message: string;
 } | null;
 
-export let BASE_URL = "https://reqres.in/api";
-
-// if (process.env.NODE_ENV === "production") {
-//   BASE_URL = "https://reqres.in/api";
-// }
+export let BASE_URL = "http://localhost:5000";
 
 export type HandleRequestOptions = { token?: string } & RequestOptions;
 
